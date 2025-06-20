@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>計算未來日期</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>幾天後是什麼日期？</h2>
+  <label for="days">請輸入距離今天的天數：</label>
+  <input type="number" id="days" min="0">
+  <button onclick="calculateDate()">計算</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateDate() {
+      const days = parseInt(document.getElementById('days').value);
+      if (isNaN(days)) {
+        document.getElementById('result').textContent = '請輸入有效的天數';
+        return;
+      }
+
+      const today = new Date();
+      const targetDate = new Date(today);
+      targetDate.setDate(today.getDate() + days);
+
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+      const formattedDate = targetDate.toLocaleDateString('zh-TW', options);
+      const weekday = weekdays[targetDate.getDay()];
+
+      document.getElementById('result').textContent =
+        `${days} 天後是 ${formattedDate}（${weekday}）`;
+    }
+  </script>
+</body>
+</html>
